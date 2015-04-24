@@ -203,7 +203,7 @@ sudo apt-get install tsuru-server -qqy
 					<h2>O Tsuru - Inicialização</h2>
 					<ul>
 						<li>Após a instalção é necessário adicionar pelo menos 1 nó;</li>
-						<li>O tsuru irá ler a configuração no arquivo de configuração para poder criar um novo nó, exemplo:</li>
+						<li>Primeiro o tsuru irá ler a configuração no arquivo de configuração em busca do provedor de IaaS para a criação dos nós, exemplo:</li>
 					</ul>
 					<pre>
 						<code data-trim>
@@ -214,6 +214,74 @@ iaas:
   ec2:
     key-id: xxxxxxxxxxx
     secret-key: yyyyyyyyyyyyy
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>O Tsuru - Inicialização</h2>
+					<ul>
+						<li>Para criar um nó basta utilizar o comando abaixo;</li>
+					</ul>
+					<pre>
+						<code data-trim>
+tsuru-admin docker-node-add iaas=ec2
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>O Tsuru - Criando um app</h2>
+					<ul>
+						<li>Para criar um app é necessário se logar no tsuru e utilizar o comando para criar o aplicativo;</li>
+						<li>Durante a criação do aplicativo escolhemos qual o seu nome e plataforma;</li>
+					</ul>
+					<pre>
+						<code data-trim>
+tsuru user-create youremail@domain.com
+tsuru login youremail@domain.com
+tsuru app-create blog python
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>O Tsuru - Criando um app</h2>
+					<ul>
+						<li>Para Fazermos um deploy da aplicação precisamos saber qual o seu endereço GIT remoto;</li>
+					</ul>
+					<pre>
+						<code data-trim>
+tsuru app-info --app blog
+Application: blog
+Repository: git@git.tsuru.io:blog.git
+Platform: python
+Teams: tsuruteam
+Address:
+						</code>
+					</pre>
+				</section>
+				
+				<section>
+					<h2>O Tsuru - Executando o aplicativo</h2>
+					<ul>
+						<li>Após o "git push" podemos verificar que o app já esta sendo executado;</li>
+						<li>O tsuru irá procurar pelo arquivo chamado "Procfile" que contêm como executar a aplicação (conceito "emprestado" do <a href="http://theforeman.org/">Foreman</a>);</li>
+					</ul>
+					<pre>
+						<code data-trim>
+$ tsuru app-info
+Application: blog
+Repository: git@git.tsuru.io:blog.git
+Platform: python
+Teams: tsuruteam
+Address: blog.cloud.tsuru.io
+Units:
++--------------+---------+
+| Unit         | State   |
++--------------+---------+
+| 9e70748f4f25 | started |
++--------------+---------+
 						</code>
 					</pre>
 				</section>
