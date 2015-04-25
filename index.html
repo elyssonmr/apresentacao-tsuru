@@ -56,7 +56,6 @@
 						<li>Conceitos</li>
 						<li>O Tsuru</li>
 						<li>Estudo de caso</li>
-						<li>Como Contribuir com o Projeto do Tsuru</li>
 						<li>Conclusão</li>
 						<li>Referências</li>
 					</ul>
@@ -64,11 +63,11 @@
 				<section>
 					<h2>Introdução</h2>
 					<ul>
-						<li>Alguns Problemas Com as Entregas do Nosso Produto;</li>
+						<li>Alguns problemas com as entregas de nossos produtos;</li>
 						<li>Entregas de Software Constantes;</li>
-						<li>Processo de Entrega Demorado;</li>
-						<li>Economia de Recursos;</li>
-						<li>Diversos Clientes com Personalizações;</li>
+						<li>Processo de entrega demorado;</li>
+						<li>Gasto elevado com recursos;</li>
+						<li>Diversos clientes com personalizações;</li>
 					</ul>
 				</section>
 
@@ -103,7 +102,7 @@
 				<section>
 					<h2>O Tsuru - O que é?</h2>
 					<ul>
-						<li>É um PaaS Open Source e extensivel;</li>
+						<li>É um PaaS Open Source e extensível;</li>
 						<li>Faz com que o deploy das aplicações ocorra de forma rápida e fácil;</li>
 						<li>Devido as suas funcionalidades o desenvolvedor só se preocupa com o desenvolvimento de seu aplicativo;</li>
 						<li>Criado pelo Pessoal da globo.com (Brasilsilsilsil \o/);</li>
@@ -117,7 +116,7 @@
 						<li>Rápido e fácil de criar um deploy continuo utilizando somente um "git push";</li>
 						<li>Fácil de se criar o deploy de versões de teste e produção para a aplicação;</li>
 						<li>Para escalar a aplicação basta adicionar uma "unidade" no Tsuru que ele toma conta do restante;</li>
-						<li>O tsuru possí um conjunto de ferramentas que garantem que a aplicação sempre estará disponivel;</li>
+						<li>O tsuru possí um conjunto de ferramentas que garantem que a aplicação sempre estará disponível;</li>
 					</ul>
 				</section>
 
@@ -125,8 +124,8 @@
 					<h2>O Tsuru - Caracteristicas</h2>
 					<ul>
 						<li>Utiliza o Docker para empacotar, entregar e executar qualquer aplicação;</li>
-						<li>A API do tsuru distribuí as aplicações entre os diversas Nodos (máquinas virtuais ou físicas);</li>
-						<li>O tsuru possuí containers que tem tudo que é necessário para uma aplicação ser executada;</li>
+						<li>A API do tsuru faz o balanceamento de carga das aplicações entre os diversos Nós (máquinas virtuais ou físicas);</li>
+						<li>O tsuru utiliza containers com tudo que é necessário para uma aplicação ser executada;</li>
 						<li>Utiliza uma arquitetura de serviços para prover funcionalidades extras para as aplicações;</li>
 					</ul>
 				</section>
@@ -137,7 +136,7 @@
 						<li>Existem 2 maneiras de Instalar:
 							<ul>
 								<li><a href="https://github.com/tsuru/now">Tsuru Now</a></li>
-								<li>Instalação de todos os componentes na mão <u>para os fortes</u>;</li>
+								<li>Instalação de todos os componentes na mão (<u>para os fortes</u>);</li>
 							</ul>
 						</li>
 					</ul>
@@ -189,7 +188,7 @@ sudo apt-get install tsuru-server -qqy
 					<h2>O Tsuru - Instalação</h2>
 					<ul>
 						<li>A última depedência e etapa da instalação é o <a href="https://github.com/hipache/hipache/">Hipache</a>;</li>
-						<li>O tsusu utiliza o Hipache para direcionar as as requisições para seus containers;</li>
+						<li>O tsuru utiliza o Hipache para direcionar as as requisições para seus containers;</li>
 						<li>Essas rotas são armazenadas no Redis;</li>
 					</ul>
 					<pre>
@@ -263,13 +262,13 @@ Address:
 				</section>
 				
 				<section>
-					<h2>O Tsuru - Executando o aplicativo</h2>
+					<h2>O Tsuru - Executando a aplicação</h2>
 					<ul>
 						<li>Após o "git push" podemos verificar que o app já esta sendo executado;</li>
 						<li>O tsuru irá procurar pelo arquivo chamado "Procfile" que contêm como executar a aplicação (conceito "emprestado" do <a href="http://theforeman.org/">Foreman</a>);</li>
 					</ul>
 					<pre>
-						<code data-trim>
+						<code>
 $ tsuru app-info
 Application: blog
 Repository: git@git.tsuru.io:blog.git
@@ -285,6 +284,28 @@ Units:
 						</code>
 					</pre>
 				</section>
+				<section>
+					<h2>O Tsuru - Adicionando serviços</h2>
+					<ul>
+						<li>Com o tsuru fica bem fácil adicionar serviços na plataforma, sem a necessidade de configurá-los;</li>
+						<li>Basta utilizar variáveis de ambiente para se conectar a um banco de dados por exemplo;</li>
+					</ul>
+					<pre>
+						<code>
+$ tsuru service-add mysql blogsql
+$ tsuru service-bind blogsql
+Instance blogsql is now bound to the app blog.
+
+The following environment variables are now available for use in your app:
+
+- MYSQL_PORT
+- MYSQL_PASSWORD
+- MYSQL_USER
+- MYSQL_HOST
+- MYSQL_DATABASE_NAME
+						</code>
+					</pre>
+				</section>
 
 				<section>
 					<h2>Estudo de Caso</h2>
@@ -292,8 +313,7 @@ Units:
 						<li>Nosso Cenário hoje:
 							<ul>
 								<li>Equipe de desenvolvimento de apenas 4 integrantes para desenvolver 2 sistemas (3 plenos e 1 trainee);</li>
-								<li>Um único software para diversos clientes;</li>
-								<li>Cada cliente possuí algumas personalizações particulares no sistema;</li>
+								<li>Existem diversas personalizações para cada cliente em um dos sistemas;</li>
 								<li>Os deploys são feitos manualmente;</li>
 								<li>Devem ser feito testes nessas personalizações;</li>
 								<li>Cada cliente possuí uma instância na Amazon;</li>
@@ -307,13 +327,36 @@ Units:
 					<ul>
 						<li>Onde precisamos chegar:
 							<ul>
-								<li>Precisamos automatizar mais testes antes de cada deploy;</li>
 								<li>Precisamos ter um deploy automático para todos os clientes;</li>
+								<li>Os serviços precisam ser transparentes para cada cliente;</li>
 								<li>O sistema deve voltar para o ar quando houver algum problema;</li>
-								<li>Seria interessante o nosso sistema ser único para todos os clientes;</li>
-								<li>Quando houver muitos usuários utilizando o sistema de leilão, o mesmo alocar mais recursos para poder suportar todos os acessos;</li>
+								<li>Quando houver muitos usuários utilizando o sistema de leilão, deve-se alocar mais recursos para poder suportar todos os acessos;</li>
 							</ul>
 						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Estudo de Caso</h2>
+					<ul>
+						<li>Como o tsuru pode nos ajudar?
+							<ul>
+								<li>Criar os deploys de cada cliente automaticamente;</li>
+								<li>Reiniciar os sistemas quando houver algum problema;</li>
+								<li>Escalar o sistema de leilão alocando mais recursos quando houver muitos usuários ao mesmo tempo;</li>
+								<li>Desalocar a equipe de desenvolvimento para exercer outras atividades;</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Conclusão</h2>
+					<ul>
+						<li>A utilização do PaaS facilita muito os cuidados necessários com infraestrutura;</li>
+						<li>Equipes pequenas podem se dedicar mais no que realmente importa para o negócio;</li>
+						<li>Redução de custos, pois os recursos são melhores administrados;</li>
+						<li>Reduz a necessidade de possuir um especialista em infra na equipe;</li>
 					</ul>
 				</section>
 
@@ -321,11 +364,16 @@ Units:
 					<h2>Referências</h2>
 					<ul>
 						<li><a href="https://tsuru.io/">Tsuru</a></li>
-						<li><a href="https://www.salesforce.com/saas/">SaaS: Software as a Service</a></li>
-						<li><a href="http://searchcloudcomputing.techtarget.com/definition/Infrastructure-as-a-Service-IaaS">Whats is Ifrastructure as a Service (IaaS)</a></li>
 						<li><a href="https://www.salesforce.com/paas/overview/">PaaS: Platform as a Service</a></li>
 					</ul>
+				</section>
 
+				<section>
+					<h1>Perguntas?</h1>
+				</section>
+
+				<section>
+					<h1>Obrigado</h1>
 				</section>
 			</div>
 
